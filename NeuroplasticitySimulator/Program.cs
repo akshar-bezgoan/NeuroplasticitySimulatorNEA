@@ -4,12 +4,11 @@ using System.IO;
 
 class Program
 {
-    // Mode selector for testing different engine strategies
     public enum LearningMode
     {
-        BiologicalOja,        // 1. Pure Bio: Oja's rule + Reward-gated Hebbian
-        PureGradientDescent,  // 2. Pure ML: Cross-Entropy Backprop + Gradient Descent
-        Hybrid                // 3. Hybrid: Backprop + Targeted Hebbian + Decay
+        Bio,
+        ML,
+        Hybrid
     }
 
     class Synapse
@@ -39,7 +38,6 @@ class Program
             if (Math.Abs(inputVal) > 0.01)
             {
                 idleSteps = 0.0;
-                // Exponential moving average for activation activity
                 activity = (0.9 * activity) + (0.1 * Math.Abs(inputVal));
             }
             else
@@ -205,16 +203,19 @@ class Program
         }
     }
 
-    // ==========================================
-    // REFACTORED PLASTICITY ENGINE
-    // ==========================================
     class PlasticityEngine
     {
-        public double hebbRate { get; set; } = 0.01;
+        public double hebbRate { get; set; } = 0.005;
         public double gradRate { get; set; } = 0.03;
-        public double decayRate { get; set; } = 0.0005;
+        public double decayRate { get; set; } = 0.0001;
 
-        // Computes Cross-Entropy loss & error gradients via backpropagation
+        // Anneals learning rates slightly every step to stabilize long-term weights
+        public void AnnealRates()
+        {
+            gradRate = Math.Max(0.002, gradRate * 0.9997);
+            hebbRate = Math.Max(0.0002, hebbRate * 0.9997);
+        }
+
         public double ComputeGradients(List<Layer> network, int targetClass)
         {
             Layer outLayer = network[network.Count - 1];
@@ -223,14 +224,12 @@ class Program
             double targetProb = outLayer.neurons[targetClass].lastOutput;
             double loss = -Math.Log(Math.Max(targetProb, 1e-15));
 
-            // Output error gradient for Softmax + Cross-Entropy: (y_hat - y)
             for (int i = 0; i < outLayer.neurons.Count; i++)
             {
                 double targetVal = (i == targetClass) ? 1.0 : 0.0;
                 outLayer.neurons[i].errorGrad = outLayer.neurons[i].lastOutput - targetVal;
             }
 
-            // Propagate error backward to hidden layer scaled by Leaky ReLU derivative
             for (int i = 0; i < hiddenLayer.neurons.Count; i++)
             {
                 Neuron hNeuron = hiddenLayer.neurons[i];
@@ -248,10 +247,7 @@ class Program
             return loss;
         }
 
-        // ---------------------------------------------------------------------
-        // 1. PURE BIOLOGICAL: Oja's Normalized Rule + Reward-Gated Hebbian
-        // ---------------------------------------------------------------------
-        public void ApplyBiologicalUpdate(List<Layer> network, int targetClass, int predClass)
+        public void ApplyBio(List<Layer> network, int targetClass, int predClass)
         {
             bool accurate = (targetClass == predClass);
 
@@ -265,8 +261,7 @@ class Program
                     {
                         if (synapse.isPruned) continue;
 
-                        // Passive decay for inactive connections
-                        if (synapse.idleSteps > 3)
+                        if (synapse.idleSteps > 10)
                         {
                             synapse.weight -= decayRate * synapse.idleSteps;
                         }
@@ -276,10 +271,8 @@ class Program
 
                         if (layer.isOutput)
                         {
-                            // Output layer targeted gating
                             if (nIdx == targetClass)
                             {
-                                // Oja's self-stabilizing rule: dw = eta * pre * (post - post^2 * w)
                                 double delta = hebbRate * preAct * (postAct - (postAct * postAct * synapse.weight));
                                 synapse.weight += delta;
                             }
@@ -290,7 +283,6 @@ class Program
                         }
                         else if (synapse.activity > 0.01)
                         {
-                            // Hidden layer co-activation reinforcement
                             if (accurate)
                             {
                                 double delta = hebbRate * preAct * (postAct - (postAct * postAct * synapse.weight));
@@ -308,16 +300,12 @@ class Program
             }
         }
 
-        // ---------------------------------------------------------------------
-        // 2. PURE ML: Standard Backpropagation & Gradient Descent
-        // ---------------------------------------------------------------------
-        public void ApplyGradientDescentUpdate(List<Layer> network)
+        public void ApplyML(List<Layer> network)
         {
             foreach (Layer layer in network)
             {
                 foreach (Neuron neuron in layer.neurons)
                 {
-                    // Update bias: b = b - gradRate * errorGrad
                     neuron.bias -= gradRate * neuron.errorGrad;
 
                     foreach (Synapse synapse in neuron.inSynapses)
@@ -325,8 +313,6 @@ class Program
                         if (synapse.isPruned) continue;
 
                         double preVal = synapse.inNeuron.lastOutput;
-
-                        // Update weight: w = w - gradRate * errorGrad * preInput
                         double gdUpdate = -gradRate * neuron.errorGrad * preVal;
                         synapse.weight += gdUpdate;
 
@@ -336,10 +322,7 @@ class Program
             }
         }
 
-        // ---------------------------------------------------------------------
-        // 3. HYBRID: Combined Gradient Descent + Targeted Hebbian + Decay
-        // ---------------------------------------------------------------------
-        public void ApplyHybridUpdate(List<Layer> network, int targetClass, int predClass)
+        public void ApplyHybrid(List<Layer> network, int targetClass, int predClass)
         {
             bool accurate = (targetClass == predClass);
 
@@ -354,28 +337,28 @@ class Program
                     {
                         if (synapse.isPruned) continue;
 
-                        // A. Passive Decay
-                        if (synapse.idleSteps > 3)
+                        // Only decay inactive non-essential pathways
+                        if (synapse.idleSteps > 10)
                         {
                             synapse.weight -= decayRate * synapse.idleSteps;
                         }
 
-                        // B. Gradient Descent component
                         double preVal = synapse.inNeuron.lastOutput;
                         double gdUpdate = -gradRate * neuron.errorGrad * preVal;
 
-                        // C. Hebbian component
                         double hebbUpdate = 0.0;
-                        if (layer.isOutput)
+                        if (accurate && synapse.activity > 0.01)
                         {
-                            hebbUpdate = (nIdx == targetClass) ? (hebbRate * synapse.activity) : (-hebbRate * synapse.activity);
-                        }
-                        else if (accurate && synapse.activity > 0.01)
-                        {
-                            hebbUpdate = hebbRate * synapse.activity;
+                            if (layer.isOutput)
+                            {
+                                hebbUpdate = (nIdx == targetClass) ? (hebbRate * synapse.activity) : (-hebbRate * synapse.activity);
+                            }
+                            else
+                            {
+                                hebbUpdate = hebbRate * synapse.activity;
+                            }
                         }
 
-                        // Combine global loss reduction with local pathway reinforcement
                         synapse.weight += gdUpdate + hebbUpdate;
                         synapse.weight = Math.Clamp(synapse.weight, -3.0, 3.0);
                     }
@@ -383,28 +366,30 @@ class Program
             }
         }
 
-        // Dispatcher method to trigger specified mode
         public double ExecuteStep(List<Layer> network, int targetClass, int predClass, LearningMode mode)
         {
             double loss = 0.0;
 
-            if (mode == LearningMode.PureGradientDescent || mode == LearningMode.Hybrid)
+            if (mode == LearningMode.ML || mode == LearningMode.Hybrid)
             {
                 loss = ComputeGradients(network, targetClass);
             }
 
             switch (mode)
             {
-                case LearningMode.BiologicalOja:
-                    ApplyBiologicalUpdate(network, targetClass, predClass);
+                case LearningMode.Bio:
+                    ApplyBio(network, targetClass, predClass);
                     break;
-                case LearningMode.PureGradientDescent:
-                    ApplyGradientDescentUpdate(network);
+                case LearningMode.ML:
+                    ApplyML(network);
                     break;
                 case LearningMode.Hybrid:
-                    ApplyHybridUpdate(network, targetClass, predClass);
+                    ApplyHybrid(network, targetClass, predClass);
                     break;
             }
+
+            // Smoothly decrease learning rate to preserve learned features over time
+            AnnealRates();
 
             return loss;
         }
@@ -480,32 +465,7 @@ class Program
         List<MnistLoader.Sample> dataset = MnistLoader.Load(trainImagesPath, trainLabelsPath, maxSamples: 5000);
         Console.WriteLine($"Loaded {dataset.Count} MNIST samples.\n");
 
-        // Select learning mode to execute: BiologicalOja | PureGradientDescent | Hybrid
         LearningMode selectedMode = LearningMode.Hybrid;
-
-        PlasticityEngine engine = new PlasticityEngine
-        {
-            hebbRate = 0.001,
-            gradRate = 0.005,
-            decayRate = 0.0002
-        };
-
-        /*
-        LearningMode selectedMode = LearningMode.PureGradientDescent;
-
-        PlasticityEngine engine = new PlasticityEngine
-        {
-            gradRate = 0.01     // Clean, classic backpropagation rate
-        };
-        */
-
-        /*LearningMode selectedMode = LearningMode.BiologicalOja;
-
-        PlasticityEngine engine = new PlasticityEngine
-        {
-            hebbRate = 0.005,
-            decayRate = 0.0001
-        };*/
 
         Layer layeri = new Layer(784, isOutput: false);
         Layer layerh1 = new Layer(64, isOutput: false);
@@ -515,6 +475,12 @@ class Program
         NetBuilder.LinkLayers(layerh1, layero);
 
         List<Layer> network = new List<Layer> { layeri, layerh1, layero };
+        PlasticityEngine engine = new PlasticityEngine
+        {
+            hebbRate = 0.005,
+            gradRate = 0.03,
+            decayRate = 0.0001
+        };
 
         Console.WriteLine($"--- Starting MNIST Training Loop [Mode: {selectedMode}] ---\n");
 
@@ -546,8 +512,12 @@ class Program
 
             if (predClass == sample.label) correctPredictions++;
 
-            // Execute update based on selected LearningMode
-            double loss = engine.ExecuteStep(network, sample.label, predClass, selectedMode);
+            // CONFIDENCE GATING: Only execute weight updates if the prediction is not already well-learned (> 85% probability)
+            double loss = 0.0;
+            if (finalProbs[sample.label] < 0.85)
+            {
+                loss = engine.ExecuteStep(network, sample.label, predClass, selectedMode);
+            }
 
             if (step % 200 == 0)
             {

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NeuroplasticitySimulator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+536e00ba4a202137338df42905d9db5a80986a79")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+758402bea6477e3e5773894bbe4b0776117b9034")]
 [assembly: System.Reflection.AssemblyProductAttribute("NeuroplasticitySimulator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NeuroplasticitySimulator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
