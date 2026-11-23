@@ -1,8 +1,143 @@
 {
   "version": 2,
-  "dgSpecHash": "Ytm8HlHQQTY=",
+  "dgSpecHash": "ejMm6mSW/X0=",
   "success": true,
-  "projectFilePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-ColchesterRoyalGrammarSchool/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "projectFilePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+  "expectedPackageFiles": [
+    "/Users/aksharbezgoan/.nuget/packages/avalonia/11.2.3/avalonia.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.angle.windows.natives/2.1.22045.20230930/avalonia.angle.windows.natives.2.1.22045.20230930.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.buildservices/0.0.29/avalonia.buildservices.0.0.29.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.desktop/11.2.3/avalonia.desktop.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.freedesktop/11.2.3/avalonia.freedesktop.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.native/11.2.3/avalonia.native.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.remote.protocol/11.2.3/avalonia.remote.protocol.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.skia/11.2.3/avalonia.skia.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.themes.fluent/11.2.3/avalonia.themes.fluent.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.win32/11.2.3/avalonia.win32.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/avalonia.x11/11.2.3/avalonia.x11.11.2.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/harfbuzzsharp/7.3.0.3/harfbuzzsharp.7.3.0.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/harfbuzzsharp.nativeassets.linux/7.3.0.3/harfbuzzsharp.nativeassets.linux.7.3.0.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/harfbuzzsharp.nativeassets.macos/7.3.0.3/harfbuzzsharp.nativeassets.macos.7.3.0.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/harfbuzzsharp.nativeassets.webassembly/7.3.0.3/harfbuzzsharp.nativeassets.webassembly.7.3.0.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/harfbuzzsharp.nativeassets.win32/7.3.0.3/harfbuzzsharp.nativeassets.win32.7.3.0.3.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/konscious.security.cryptography.argon2/1.3.1/konscious.security.cryptography.argon2.1.3.1.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/konscious.security.cryptography.blake2/1.1.1/konscious.security.cryptography.blake2.1.1.1.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/microcom.runtime/0.11.0/microcom.runtime.0.11.0.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/microsoft.data.sqlite/8.0.11/microsoft.data.sqlite.8.0.11.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/microsoft.data.sqlite.core/8.0.11/microsoft.data.sqlite.core.8.0.11.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/sixlabors.imagesharp/3.1.6/sixlabors.imagesharp.3.1.6.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/skiasharp/2.88.9/skiasharp.2.88.9.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/skiasharp.nativeassets.linux/2.88.9/skiasharp.nativeassets.linux.2.88.9.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/skiasharp.nativeassets.macos/2.88.9/skiasharp.nativeassets.macos.2.88.9.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/skiasharp.nativeassets.webassembly/2.88.9/skiasharp.nativeassets.webassembly.2.88.9.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/skiasharp.nativeassets.win32/2.88.9/skiasharp.nativeassets.win32.2.88.9.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.6/sqlitepclraw.bundle_e_sqlite3.2.1.6.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/sqlitepclraw.core/2.1.6/sqlitepclraw.core.2.1.6.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.6/sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.6/sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/tmds.dbus.protocol/0.20.0/tmds.dbus.protocol.0.20.0.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/microsoft.netcore.app.ref/8.0.24/microsoft.netcore.app.ref.8.0.24.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.24/microsoft.aspnetcore.app.ref.8.0.24.nupkg.sha512",
+    "/Users/aksharbezgoan/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.24/microsoft.netcore.app.host.osx-arm64.8.0.24.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known high severity vulnerability, https://github.com/advisories/GHSA-2cmq-823j-5qj8",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-gwg2-r3hj-4w44",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known high severity vulnerability, https://github.com/advisories/GHSA-j3p4-wp97-rph4",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known high severity vulnerability, https://github.com/advisories/GHSA-j9gm-c75j-xc9q",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known high severity vulnerability, https://github.com/advisories/GHSA-jjfr-hcj7-qf5w",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-rxmq-m78w-7wmc",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known high severity vulnerability, https://github.com/advisories/GHSA-v76p-62qx-wwq2",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.6 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-wmxv-xphr-5c9g",
+      "projectPath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/aksharbezgoan/Library/CloudStorage/OneDrive-TheThinkingSchoolsAcademyTrust/Documents/A-Level Computing/NEA/NeuroplasticitySimulator/NeuroplasticitySimulator.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
