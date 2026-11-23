@@ -36,7 +36,7 @@ public class MainWindow : Window
 
         var top = new StackPanel { Margin = new Thickness(8, 16) };
         top.Children.Add(new StackPanel { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(14, 8, 8, 24), Children = {
-            UiTheme.T("NEUROPLASTICITY", 11, true, UiTheme.Muted), UiTheme.T("SIMULATOR", 11, true, UiTheme.Text) } });
+            UiTheme.T("NEUROPLASTICITY", 11, true, UiTheme.SideMuted), UiTheme.T("SIMULATOR", 11, true, UiTheme.SideText) } });
         top.Children.Add(Nav("Home", "Home", ShowDashboard));
         top.Children.Add(Nav("Experiments", "My Experiments", ShowExperiments));
         top.Children.Add(Nav("New", "New Experiment", ShowNew));
@@ -66,7 +66,7 @@ public class MainWindow : Window
     Button Nav(string key, string text, Action go)
     {
         var b = new Button { Content = text, HorizontalAlignment = HorizontalAlignment.Stretch, HorizontalContentAlignment = HorizontalAlignment.Left,
-            Background = Brushes.Transparent, Foreground = UiTheme.B(UiTheme.Text), Padding = new Thickness(14, 10), CornerRadius = new CornerRadius(UiTheme.Radius), Margin = new Thickness(0, 2), FontFamily = new FontFamily("Avenir Next") };
+            Background = Brushes.Transparent, Foreground = UiTheme.B(UiTheme.SideText), Padding = new Thickness(14, 10), CornerRadius = new CornerRadius(UiTheme.Radius), Margin = new Thickness(0, 2), FontFamily = new FontFamily("Avenir Next") };
         b.Click += (_, _) => go();
         nav[key] = b; return b;
     }
@@ -82,13 +82,18 @@ public class MainWindow : Window
     static Control IconLabel(string icon, string label) => new StackPanel
     {
         Orientation = Orientation.Horizontal, Spacing = 10, VerticalAlignment = VerticalAlignment.Center,
-        Children = { new LineIcon { Kind = icon, Width = 18, Height = 18, Stroke = UiTheme.B(UiTheme.Accent), VerticalAlignment = VerticalAlignment.Center }, UiTheme.T(label, 13) }
+        Children = { new LineIcon { Kind = icon, Width = 18, Height = 18, Stroke = UiTheme.B(UiTheme.SideText), VerticalAlignment = VerticalAlignment.Center }, UiTheme.T(label, 13, false, UiTheme.SideText) }
     };
 
     void Go(string key, Control view)
     {
         host.Content = view;
-        foreach (var kv in nav) kv.Value.Background = kv.Key == key ? UiTheme.B(UiTheme.Accent) : Brushes.Transparent;
+        foreach (var kv in nav)
+        {
+            bool selected = kv.Key == key;
+            kv.Value.Background = selected ? UiTheme.B(UiTheme.SideActive) : Brushes.Transparent;
+            kv.Value.Foreground = UiTheme.B(selected ? UiTheme.SideText : UiTheme.SideMuted);
+        }
         nav["Simulation"].IsVisible = Current != null;
     }
 

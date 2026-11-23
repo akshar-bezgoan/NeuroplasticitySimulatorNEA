@@ -17,22 +17,22 @@ public static class Draw
 {
     public static readonly IBrush Panel = UiTheme.B(UiTheme.Plot);
     public static readonly IBrush Text = UiTheme.B(UiTheme.Text);
-    public static readonly IBrush Dead = new SolidColorBrush(Color.FromRgb(60, 60, 70));
+    public static readonly IBrush Dead = new SolidColorBrush(Color.Parse("#B7C3CC"));
 
     public static void Txt(DrawingContext c, string s, double x, double y, IBrush b = null, double size = 11) =>
         c.DrawText(new FormattedText(s, CultureInfo.InvariantCulture, FlowDirection.LeftToRight, new Typeface("SF Mono"), size, b ?? Text), new Point(x, y));
 
     static byte L(double a, double b, double t) => (byte)(a + (b - a) * t);
 
-    /// <summary>Weight colour: red = positive, blue = negative, pale = near zero.</summary>
+    /// <summary>Accessible diverging weight colours: amber = positive, blue = negative, neutral = near zero.</summary>
     public static Color WeightColour(double w, double scale = 1.0)
     {
         double m = Math.Min(1, Math.Abs(w) / scale);
-        return w >= 0 ? Color.FromRgb(L(235, 220, m), L(225, 60, m), L(235, 90, m)) : Color.FromRgb(L(235, 70, m), L(225, 130, m), L(235, 255, m));
+        return w >= 0 ? Color.FromRgb(L(232, 190, m), L(237, 112, m), L(241, 35, m)) : Color.FromRgb(L(232, 50, m), L(237, 111, m), L(241, 166, m));
     }
 
-    /// <summary>Activity ramp 0..1: deep blue-green to clear teal.</summary>
-    public static Color Activity(double t) { t = Math.Clamp(t, 0, 1); return Color.FromRgb(L(20, 105, t), L(43, 198, t), L(48, 199, t)); }
+    /// <summary>Sequential activity ramp 0..1: pale blue-gray to saturated teal.</summary>
+    public static Color Activity(double t) { t = Math.Clamp(t, 0, 1); return Color.FromRgb(L(224, 8, t), L(234, 126, t), L(240, 139, t)); }
 }
 
 /// <summary>Three restrained outline symbols for menu, visibility and injury actions.</summary>
@@ -121,7 +121,7 @@ public class ChartControl : Control
         var series = Source().ToList();
         double T = Math.Max(100, series.Select(s => s.History.Count == 0 ? 0 : (double)s.History[^1].Cycle).DefaultIfEmpty(100).Max());
         double ymax = FixedMax ?? Math.Max(1, series.SelectMany(s => s.History).Select(Y).DefaultIfEmpty(1).Max() * 1.1);
-        var grid = new Pen(new SolidColorBrush(Color.FromArgb(45, 255, 255, 255)), 1);
+        var grid = new Pen(new SolidColorBrush(Color.FromArgb(190, UiTheme.Line.R, UiTheme.Line.G, UiTheme.Line.B)), 1);
         for (int i = 0; i <= 4; i++)
         {
             double v = ymax * i / 4, py = t + h - v / ymax * h;
@@ -236,7 +236,7 @@ public class NetworkView : Control
             {
                 var p = Pos(layer, i, ns.Length); bool sel = Selected == (layer, i);
                 IBrush fill = ns[i].Lesioned ? Brushes.Transparent : new SolidColorBrush(Draw.Activity(0.35 + 0.65 * Math.Min(1, ns[i].MeanAbsWeight() / 0.8)));
-                ctx.DrawEllipse(fill, sel ? new Pen(Brushes.White, 2) : new Pen(ns[i].Lesioned ? Brushes.Gray : UiTheme.B(UiTheme.Line), 1), p, sel ? rad + 2 : rad, sel ? rad + 2 : rad);
+                ctx.DrawEllipse(fill, sel ? new Pen(UiTheme.B(UiTheme.Accent), 2) : new Pen(ns[i].Lesioned ? Brushes.Gray : UiTheme.B(UiTheme.Line), 1), p, sel ? rad + 2 : rad, sel ? rad + 2 : rad);
                 if (layer == 2) Draw.Txt(ctx, i < Agent.Data.ClassNames.Length ? Agent.Data.ClassNames[i] : i.ToString(), p.X + 11, p.Y - 7, null, 10);
             }
         }

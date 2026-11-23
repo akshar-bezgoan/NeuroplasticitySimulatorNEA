@@ -25,8 +25,8 @@ public static class Cards
 
         var head = new StackPanel
         {
-            Spacing = 4,
-            Children = { UiTheme.T(info.Name, 16, true), UiTheme.T(info.Architecture + (live != null ? $" · {live.Agents.Count} agent(s)" : ""), 11, false, UiTheme.Muted) }
+            Spacing = 5,
+            Children = { UiTheme.T(info.Name, 16, true), UiTheme.T(info.Architecture + (live != null ? $" · {live.Agents.Count} agent(s)" : ""), 12, false, UiTheme.Muted) }
         };
 
         var btns = new WrapPanel();
@@ -48,8 +48,15 @@ public static class Cards
         }
         var barRow = new Grid { ColumnDefinitions = new ColumnDefinitions("*,Auto") };
         barRow.Children.Add(bar); Grid.SetColumn(pct, 1); barRow.Children.Add(pct);
-        var body = new StackPanel { Spacing = 8, Width = 300, Children = { head, UiTheme.Pill(status, UiTheme.StatusColour(status)), saved, barRow, btns } };
-        return UiTheme.Card(body);
+        var statusRow = new DockPanel();
+        var statusLabel = UiTheme.T("●  " + status, 11, true, UiTheme.StatusColour(status));
+        DockPanel.SetDock(statusLabel, Dock.Left); statusRow.Children.Add(statusLabel);
+        var body = new StackPanel { Spacing = 10, Width = 300, Children = { head, statusRow, saved, barRow, btns } };
+        return new Border
+        {
+            Background = UiTheme.B(UiTheme.CardC), BorderBrush = UiTheme.B(UiTheme.Line), BorderThickness = new Thickness(1),
+            CornerRadius = new CornerRadius(UiTheme.Radius), Padding = new Thickness(16), Margin = new Thickness(5), Child = body
+        };
     }
 }
 
@@ -57,8 +64,8 @@ static class ViewHelpers
 {
     public static Border Tile(string label, TextBlock value) => new()
     {
-        Background = Brushes.Transparent, BorderBrush = UiTheme.B(UiTheme.Line), BorderThickness = new Thickness(0, 0, 0, 1),
-        Padding = new Thickness(12, 10), Margin = new Thickness(4),
+        Background = UiTheme.B(UiTheme.CardC), BorderBrush = UiTheme.B(UiTheme.Line), BorderThickness = new Thickness(1),
+        CornerRadius = new CornerRadius(UiTheme.Radius), Padding = new Thickness(14, 12), Margin = new Thickness(4),
         Child = new StackPanel { Spacing = 4, Children = { UiTheme.T(label.ToUpperInvariant(), 10, true, UiTheme.Muted), value } }
     };
 
@@ -81,17 +88,20 @@ public class DashboardView : UserControl, IRefreshable
         string StatusOf(ExperimentInfo i) => sh.Live.FirstOrDefault(x => x.DbId == i.Id)?.Status ?? i.Status;
         double hours = list.Sum(i => sh.Live.FirstOrDefault(x => x.DbId == i.Id)?.Elapsed.TotalSeconds ?? i.RuntimeSec) / 3600.0;
 
-        var tiles = new Grid { ColumnDefinitions = new ColumnDefinitions("2*,*,*"), RowDefinitions = new RowDefinitions("Auto,Auto") };
-        var totalTile = ViewHelpers.Tile("Total Experiments", UiTheme.Mono(list.Count.ToString(), 34, true, UiTheme.Accent));
-        tiles.Children.Add(totalTile); Grid.SetRowSpan(totalTile, 2);
-        var completedTile = ViewHelpers.Tile("Completed", UiTheme.Mono(list.Count(i => StatusOf(i) == "Completed").ToString(), 22, true));
-        Grid.SetColumn(completedTile, 1); tiles.Children.Add(completedTile);
-        var runningTile = ViewHelpers.Tile("Running", UiTheme.Mono(list.Count(i => StatusOf(i) == "Running").ToString(), 22, true));
-        Grid.SetColumn(runningTile, 2); tiles.Children.Add(runningTile);
-        var pausedTile = ViewHelpers.Tile("Paused", UiTheme.Mono(list.Count(i => StatusOf(i) == "Paused").ToString(), 22, true));
-        Grid.SetColumn(pausedTile, 1); Grid.SetRow(pausedTile, 1); tiles.Children.Add(pausedTile);
-        var runtimeTile = ViewHelpers.Tile("Total Runtime", UiTheme.Mono($"{hours:0.0}h", 22, true));
-        Grid.SetColumn(runtimeTile, 2); Grid.SetRow(runtimeTile, 1); tiles.Children.Add(runtimeTile);
+        var tiles = new Grid { ColumnDefinitions = new ColumnDefinitions("*,*,*,*,*"), Margin = new Thickness(0, 12, 0, 8) };
+        var summary = new[]
+        {
+            ("Experiments", list.Count.ToString(), UiTheme.Accent),
+            ("Running", list.Count(i => StatusOf(i) == "Running").ToString(), UiTheme.StatusColour("Running")),
+            ("Paused", list.Count(i => StatusOf(i) == "Paused").ToString(), UiTheme.StatusColour("Paused")),
+            ("Completed", list.Count(i => StatusOf(i) == "Completed").ToString(), UiTheme.StatusColour("Completed")),
+            ("Runtime", $"{hours:0.0}h", UiTheme.Text)
+        };
+        for (int i = 0; i < summary.Length; i++)
+        {
+            var tile = ViewHelpers.Tile(summary[i].Item1, UiTheme.Mono(summary[i].Item2, 22, true, summary[i].Item3));
+            Grid.SetColumn(tile, i); tiles.Children.Add(tile);
+        }
 
         var cards = new WrapPanel();
         foreach (var i in list.Take(3)) cards.Children.Add(Cards.Build(sh, i, refreshers));

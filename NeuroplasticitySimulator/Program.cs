@@ -15,7 +15,7 @@ public class App : Application
     public override void Initialize()
     {
         Styles.Add(new FluentTheme());
-        RequestedThemeVariant = ThemeVariant.Dark;
+        RequestedThemeVariant = ThemeVariant.Light;
     }
 
     public override void OnFrameworkInitializationCompleted()

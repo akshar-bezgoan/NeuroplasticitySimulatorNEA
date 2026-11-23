@@ -5,16 +5,16 @@ using Avalonia.Media;
 
 namespace Neuroplasticity.UI;
 
-/// <summary>Compact research-workbench tokens with semantic scientific colours.</summary>
+/// <summary>Light research-workspace tokens with a deep-blue navigation rail and semantic data colours.</summary>
 public static class UiTheme
 {
-    // Visual tokens: graphite surfaces, cool neural data, amber warnings, green recovery.
+    // Visual tokens: deep-blue navigation, pale work surfaces, and distinct scientific data colours.
     public const double Space1 = 4, Space2 = 8, Space3 = 12, Space4 = 16, Space5 = 24;
-    public const double Radius = 4;
-    public static readonly Color Bg = Color.Parse("#111416"), Side = Color.Parse("#171C1F"), CardC = Color.Parse("#1B2124"),
-        Line = Color.Parse("#343D40"), Accent = Color.Parse("#63BFC3"), Soft = Color.Parse("#A6DADD"), Good = Color.Parse("#75C79A"),
-        Warn = Color.Parse("#D9A958"), Bad = Color.Parse("#D96E67"), Text = Color.Parse("#E7ECEB"), Muted = Color.Parse("#9AA7A8"),
-        Plot = Color.Parse("#0D1113");
+    public const double Radius = 8;
+    public static readonly Color Bg = Color.Parse("#F3F6F8"), Side = Color.Parse("#19334D"), CardC = Color.Parse("#FFFFFF"),
+        Line = Color.Parse("#DCE4EA"), Accent = Color.Parse("#315E86"), Soft = Color.Parse("#557B91"), Good = Color.Parse("#34795E"),
+        Warn = Color.Parse("#A76D25"), Bad = Color.Parse("#B24E47"), Text = Color.Parse("#203244"), Muted = Color.Parse("#657687"),
+        Plot = Color.Parse("#F8FAFC"), SideText = Color.Parse("#EAF1F7"), SideMuted = Color.Parse("#B3C3D0"), SideActive = Color.Parse("#2C4D6A");
 
     public static IBrush B(Color c) => new SolidColorBrush(c);
 
@@ -45,7 +45,7 @@ public static class UiTheme
         {
             Content = text, Foreground = B(fg ?? (outline ? Text : Bg)), Background = outline ? B(CardC) : B(bg ?? Accent),
             BorderBrush = B(outline ? Line : Accent), BorderThickness = new Thickness(1),
-            CornerRadius = new CornerRadius(Radius), Padding = new Thickness(12, 7), Margin = new Thickness(0, 0, 6, 0),
+            CornerRadius = new CornerRadius(6), Padding = new Thickness(14, 8), Margin = new Thickness(0, 0, 6, 0),
             FontFamily = new FontFamily("Avenir Next")
         };
         b.Click += (_, _) => click();

@@ -8,8 +8,8 @@ public class SimulationSession
 {
     public static readonly Color[] Palette =
     {
-        Color.Parse("#63BFC3"), Color.Parse("#829DD1"), Color.Parse("#D9A958"),
-        Color.Parse("#75C79A"), Color.Parse("#C9848E"), Color.Parse("#97AEB2")
+        Color.Parse("#087E8B"), Color.Parse("#356EC4"), Color.Parse("#B56C18"),
+        Color.Parse("#278259"), Color.Parse("#8B63A8"), Color.Parse("#B34F70")
     };
     public const int MaxAgents = 6;
 
